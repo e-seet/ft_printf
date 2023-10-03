@@ -20,19 +20,17 @@
 // When calling the function
 // ft_printf("this item costs %d dollars and that is %d", 10, 50);
 // it wil ltake it string and (10, 15) in ...
-void	ft_putchar(int c)
-{
-	write(1, &c, 1);
-}
 
 
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
 	int		i;
+	int		num;
 
 	va_start(args, str);
 	i = 0;
+	num = 0;
 	while (str[i] != '\0')
 	{
 		// printf("i value: %d", i);
@@ -41,7 +39,7 @@ int	ft_printf(const char *str, ...)
 		if (str[i] == '%')
 		{
 			if (str[i + 1] == 'c')
-				ft_putchar(va_arg(args, int));
+				ft_putchar(va_arg(args, int), &num);
 			// else if (str[i + 1] == 's')
 			// 	ft_putstr(va_arg(args, char *));
 			// else if (str[i + 1] == 'p')

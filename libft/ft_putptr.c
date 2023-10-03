@@ -21,7 +21,7 @@ uint32_t byte4 = value & 0xff;
 #include "libft.h"
 
 // print address of the pointer
-void	ft_putptr(void *s)
+void	ft_putptr(void *s, int *ptrnum)
 {
 	char		buf[2 + sizeof((uintptr_t)s) * 2];
 	size_t		i;
@@ -43,6 +43,7 @@ void	ft_putptr(void *s)
 	while (buf[startindex] == '0')
 		startindex++;
 	length = 2 + sizeof(x) * 2 - startindex;
+	ptrnum = ptrnum + 2 + length;
 	write(1, buf, 2);
 	write(1, buf + startindex, length);
 }

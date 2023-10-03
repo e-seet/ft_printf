@@ -1,8 +1,8 @@
 #include "libft.h"
 
-void	ft_putunbr(unsigned int n)
+void	ft_putunbr(unsigned int n, int *ptrnum)
 {
-	ft_putnbr_fd(n);
+	ft_putnbr_fd(n, ptrnum);
 }
 
 // if (n < 0)
