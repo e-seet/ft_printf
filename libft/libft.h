@@ -13,7 +13,7 @@
 // void	ft_putunbr(unsigned int n);
 // void	ft_putstr(char *s);
 
-int		ft_putchar(int c, int *ptrnum);
+void	ft_putchar(int c, int *ptrnum);
 void	ft_puthex(unsigned int n, int *ptrnum);
 void	ft_puthexup(unsigned int n, int *ptrnum);
 void	ft_putnbr_fd(int n, int *ptrnum);

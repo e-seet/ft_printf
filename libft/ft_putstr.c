@@ -12,11 +12,14 @@ int	ft_strlen(char *s)
 
 void	ft_putstr(char *s, int *ptrnum)
 {
-	int	len;
-	
+	int		len;
+	size_t	write_ok;
+
 	if (!s)
-		return ft_putstr("(null)", ptrnum);
+		return (ft_putstr("(null)", ptrnum));
 	len = ft_strlen(s);
 	*ptrnum = *ptrnum + len ;
-	write(1, s, len);
+	write_ok = write(1, s, len);
+	if (write_ok != (size_t) len)
+		*ptrnum = -1;
 }

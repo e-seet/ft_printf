@@ -27,11 +27,12 @@ int	ft_printf(const char *str, ...)
 	va_list	args;
 	int		i;
 	int		num;
+	size_t	write_ok;
 
 	va_start(args, str);
 	i = 0;
 	num = 0;
-	while (str[i] != '\0')
+	while (str[i] != '\0' && num != -1)
 	{
 		if (str[i] == '%')
 		{
@@ -55,7 +56,12 @@ int	ft_printf(const char *str, ...)
 		}
 		else
 		{
-			write(1, &str[i], 1);
+			write_ok = write(1, &str[i], 1);
+			if (write_ok != (size_t) 1)
+			{
+				num = -1;
+				break ;
+			}
 			i++;
 			num = num + 1;
 		}

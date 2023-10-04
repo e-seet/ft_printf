@@ -28,13 +28,18 @@ void	ft_putptr(void *s, int *ptrnum)
 	size_t		startindex;
 	size_t		length;
 	uintptr_t	x;
+	size_t		write_ok;
 
 	x = (uintptr_t) s;
 	if (x == 0)
 	{
-		write(1, "0x0", 3);
 		*ptrnum = *ptrnum + 3;
-		return;
+		write_ok = write(1, "0x0", 3);
+		if (write_ok != (size_t) 3)
+		{
+			*ptrnum = -1;
+			return ;
+		}
 	}
 	i = 0;
 	startindex = 2;
@@ -50,6 +55,13 @@ void	ft_putptr(void *s, int *ptrnum)
 		startindex++;
 	length = 2 + sizeof(x) * 2 - startindex;
 	*ptrnum = *ptrnum + 2 + length;
-	write(1, buf, 2);
-	write(1, buf + startindex, length);
+	write_ok = write(1, buf, 2);
+	if (write_ok == (size_t) 2)
+	{
+		write_ok = write(1, buf + startindex, length);
+		if (write_ok != (size_t) length)
+			*ptrnum = -1;
+	}
+	else
+		*ptrnum = -1;
 }
