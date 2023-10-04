@@ -1,43 +1,48 @@
 # **************************************************************************** #
-# Variables
+# Vars
 # **************************************************************************** #
 
 NAME        = libftprintf.a
-CC          = gcc
-CFLAGS      = -Wall -Wextra -Werror
-INCLUDES    = -I . -I libft
-LIBS        = -L libft -lft
+PRINT_NAME  = FT_PRINTF
 
 # **************************************************************************** #
-# Source Files
+# Comp and flags
 # **************************************************************************** #
+CC := gcc
+CFLAGS := -Wall -Wextra -Werror
 
-SRCS        = ft_printf.c
-OBJS        = $(SRCS:.c=.o)
+LIBFT_DIR   = ./libft
+LIBFT       = $(LIBFT_DIR)/libft.a
+
+# **************************************************************************** #
+# Source
+# **************************************************************************** #
+SRC_FILES   := ft_printf.c
+OBJS        = $(SRC_FILES:.c=.o)
 
 # **************************************************************************** #
 # Rules
 # **************************************************************************** #
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(MAKE) -C libft
-	cp libft/libft.a $(NAME)
-	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	@ar -rcs $(NAME) $(OBJS)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+$(OBJS): %.o: %.c
+	@$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
+
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+	@cp $(LIBFT) $(NAME)
 
 clean:
-	$(MAKE) -C libft clean
-	rm -f $(OBJS)
+	rm	-f	$(OBJS)
+	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(MAKE) -C libft fclean
 	rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 
-re: fclean all
-
-.PHONY: all clean fclean re
+re:	fclean all

@@ -30,6 +30,12 @@ void	ft_putptr(void *s, int *ptrnum)
 	uintptr_t	x;
 
 	x = (uintptr_t) s;
+	if (x == 0)
+	{
+		write(1, "0x0", 3);
+		*ptrnum = *ptrnum + 3;
+		return;
+	}
 	i = 0;
 	startindex = 2;
 	buf[0] = '0';
@@ -43,7 +49,7 @@ void	ft_putptr(void *s, int *ptrnum)
 	while (buf[startindex] == '0')
 		startindex++;
 	length = 2 + sizeof(x) * 2 - startindex;
-	ptrnum = ptrnum + 2 + length;
+	*ptrnum = *ptrnum + 2 + length;
 	write(1, buf, 2);
 	write(1, buf + startindex, length);
 }

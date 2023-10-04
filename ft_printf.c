@@ -1,10 +1,11 @@
 // #include <stdio.h>
-// #include <stdarg.h>
+#include <stdarg.h>
 // #include "libft/libft.h"
 #include <stdio.h>
 #include <limits.h> // for LONG_MIN, LONG_MAX, INT_MIN, INT_MAX, ULONG_MAX
 #include "ft_printf.h"
 #include <unistd.h> // for write
+#include "libft/libft.h"
 
 // %c Prints a single character.
 // • %s Prints a string (as defined by the common C convention).
@@ -21,7 +22,6 @@
 // ft_printf("this item costs %d dollars and that is %d", 10, 50);
 // it wil ltake it string and (10, 15) in ...
 
-
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
@@ -33,223 +33,59 @@ int	ft_printf(const char *str, ...)
 	num = 0;
 	while (str[i] != '\0')
 	{
-		// printf("i value: %d", i);
-		// printf("str[i] value: %c", str[i]);
-		// printf("str[i + 1] value: %c\n\n", str[i+ 1]);
 		if (str[i] == '%')
 		{
 			if (str[i + 1] == 'c')
 				ft_putchar(va_arg(args, int), &num);
-			// else if (str[i + 1] == 's')
-			// 	ft_putstr(va_arg(args, char *));
-			// else if (str[i + 1] == 'p')
-			// 	ft_putptr(va_arg(args, void *));
-			// else if (str[i + 1] == 'd' || str[i + 1] == 'i')
-			// 	ft_putnbr_fd(va_arg(args, int));
-			// else if (str[i + 1] == 'u')
-			// 	ft_putunbr(va_arg(args, unsigned int));
-			// else if (str[i + 1] == 'x')
-			// 	ft_puthex(va_arg(args, unsigned int));
-			// else if (str[i + 1] == 'X')
-			// 	ft_puthexup(va_arg(args, unsigned int));
+			else if (str[i + 1] == 's')
+				ft_putstr(va_arg(args, char *), &num);
+			else if (str[i + 1] == 'p')
+				ft_putptr(va_arg(args, void *), &num);
+			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
+				ft_putnbr_fd(va_arg(args, int), &num);
+			else if (str[i + 1] == 'u')
+				ft_putunbr(va_arg(args, unsigned int), &num);
+			else if (str[i + 1] == 'x')
+				ft_puthex(va_arg(args, unsigned int), &num);
+			else if (str[i + 1] == 'X')
+				ft_puthexup(va_arg(args, unsigned int), &num);
 			else if (str[i + 1] == '%')
-				ft_putchar('%');
+				ft_putchar('%', &num);
 			i = i + 2;
 		}
 		else
 		{
 			write(1, &str[i], 1);
 			i++;
+			num = num + 1;
 		}
 	}
-	return (0);
+	return (num);
 }
 
-/* 
-//printfTester
+/*
 int main(void)
 {
-	ft_printf("mine:%c", '0');
-    printf("\nprintf:%c\n", '0');
- 	
-    ft_printf("mine: %c", '0' + 256);
-    printf("\nprintf: %c\n", '0' + 256);
+	char s2[] = "Mussum Ipsum, cacilds vidis litro abertis.
+	 Posuere libero varius. Nullam a nisl ut ante blandit hendrerit.
+	  Aenean sit amet nisi. Atirei o pau no gatis, per gatis
+	   num morreus.";
+	int val;
 
-    ft_printf("mine: %c %c %c ", '0', 0, '1');
-    printf("\nprintf: %c %c %c\n", '0', 0, '1');
-
-    ft_printf("mine: %c %c %c ", ' ', ' ', ' ');
-    printf("\nprintf: %c %c %c\n", ' ', ' ', ' ');
-
-    ft_printf("mine: %c %c %c ", '1', '2', '3');
-    printf("\nprintf: %c %c %c\n", '1', '2', '3');
-
-    ft_printf("mine: %c %c %c ", '2', '1', 0);
-    printf("\nprintf: %c %c %c\n", '2', '1', 0);
-
-    ft_printf("mine: %c %c %c ", 0, '1', '2');
-    printf("\nprintf: %c %c %c\n", 0, '1', '2');
-
-
-//  ft_printf("mine: %s", "");
-//     printf("printf: %s\n", "");
-
-//     ft_printf("mine: %s", "");
-//     printf("printf: %s\n", "");
-
-//     ft_printf("mine: %s", "");
-//     printf("printf: %s\n", "");
-
-//     ft_printf("mine: %s", "-");
-//     printf("printf: %s\n", "-");
-
-//     ft_printf("mine: %s %s", "", "-");
-//     printf("printf: %s %s\n", "", "-");
-
-//     ft_printf("mine: %s %s", " - ", "");
-//     printf("printf: %s %s\n", " - ", "");
-
-//     ft_printf("mine: %s %s %s %s %s", " - ", "", "4", "", s2);
-//     printf("printf: %s %s %s %s %s\n", " - ", "", "4", "", s2);
-
-//     ft_printf("mine: %s %s %s %s %s", " - ", "", "4", "", "2 ");
-//     printf("printf: %s %s %s %s %s\n", " - ", "", "4", "", "2 ");
-
-//     ft_printf("mine: NULL %s NULL", NULL);
-//     printf("printf: NULL %s NULL\n", NULL);
-
-// ft_printf("mine: %p ", (void *)-1);
-//     printf("printf: %p\n", (void *)-1);
-
-//     ft_printf("mine: %p ", (void *)1);
-//     printf("printf: %p\n", (void *)1);
-
-//     ft_printf("mine: %p ", (void *)15);
-//     printf("printf: %p\n", (void *)15);
-
-//     ft_printf("mine: %p ", (void *)16);
-//     printf("printf: %p\n", (void *)16);
-
-//     ft_printf("mine: %p ", (void *)17);
-//     printf("printf: %p\n", (void *)17);
-
-//     ft_printf("mine: %p %p ", (void *)LONG_MIN, (void *)LONG_MAX);
-//     printf("printf: %p %p\n", (void *)LONG_MIN, (void *)LONG_MAX);
-
-//     ft_printf("mine: %p %p ", (void *)INT_MIN, (void *)INT_MAX);
-//     printf("printf: %p %p\n", (void *)INT_MIN, (void *)INT_MAX);
-
-//     ft_printf("mine: %p %p ", (void *)ULONG_MAX, (void *)-ULONG_MAX);
-//     printf("printf: %p %p\n", (void *)ULONG_MAX, (void *)-ULONG_MAX);
-
-//     ft_printf("mine: %p %p ", (void *)0, (void *)0);
-//     printf("printf: %p %p\n", (void *)0, (void *)0);	
-
-    // ft_printf("mine: %d ", 0);
-    // printf("printf: %d\n", 0);
-
-    // ft_printf("mine: %d ", -1);
-    // printf("printf: %d\n", -1);
-
-    // ft_printf("mine: %d ", 1);
-    // printf("printf: %d\n", 1);
-
-    // ft_printf("mine: %d ", 9);
-    // printf("printf: %d\n", 9);
-
-    // ft_printf("mine: %d ", 10);
-    // printf("printf: %d\n", 10);
-
-    // ft_printf("mine: %d ", 11);
-    // printf("printf: %d\n", 11);
-
-    // ft_printf("mine: %d ", 15);
-    // printf("printf: %d\n", 15);
-
-    // ft_printf("mine: %d ", 16);
-    // printf("printf: %d\n", 16);
-
-    // ft_printf("mine: %d ", 17);
-    // printf("printf: %d\n", 17);
-
-    // ft_printf("mine: %d ", 99);
-    // printf("printf: %d\n", 99);
-
-    // ft_printf("mine: %d ", 100);
-    // printf("printf: %d\n", 100);
-
-    // ft_printf("mine: %d ", 101);
-    // printf("printf: %d\n", 101);
-
-    // ft_printf("mine: %d ", -9);
-    // printf("printf: %d\n", -9);
-
-    // ft_printf("mine: %d ", -10);
-    // printf("printf: %d\n", -10);
-
-    // ft_printf("mine: %d ", -11);
-    // printf("printf: %d\n", -11);
-
-    // ft_printf("mine: %d ", -14);
-    // printf("printf: %d\n", -14);
-
-    // ft_printf("mine: %d ", -15);
-    // printf("printf: %d\n", -15);
-
-    // ft_printf("mine: %d ", -16);
-    // printf("printf: %d\n", -16);
-
-    // ft_printf("mine: %d ", -99);
-    // printf("printf: %d\n", -99);
-
-    // ft_printf("mine: %d ", -100);
-    // printf("printf: %d\n", -100);
-
-    // ft_printf("mine: %d ", -101);
-    // printf("printf: %d\n", -101);
-
-    // ft_printf("mine: %d ", INT_MAX);
-    // printf("printf: %d\n", INT_MAX);
-
-    // ft_printf("mine: %d ", INT_MIN);
-    // printf("printf: %d\n", INT_MIN);
-
-    // ft_printf("mine: %ld ", LONG_MAX);
-    // printf("printf: %ld\n", LONG_MAX);
-
-    // ft_printf("mine: %ld ", LONG_MIN);
-    // printf("printf: %ld\n", LONG_MIN);
-
-    // ft_printf("mine: %u ", UINT_MAX);
-    // printf("printf: %u\n", UINT_MAX);
-
-    // ft_printf("mine: %lu ", ULONG_MAX);
-    // printf("printf: %lu\n", ULONG_MAX);
-
-    // ft_printf("mine: %lld ", 9223372036854775807LL);
-    // printf("printf: %lld\n", 9223372036854775807LL);
-
-    // ft_printf("mine: %d %d %ld %ld %lu %d %d",
-    //            INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
-    // printf("printf: %d %d %ld %ld %lu %d %d\n",
-    //        INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
-    // return 0;
+	val = ft_printf(" %s ", "-"); //3
+	printf("val: %d\n", val);
+	// ft_printf(" %s %s ", "", "-"); //4
+	// printf("\n");
+	// ft_printf(" %s %s ", " - ", "");
+	// printf("\n");
+	// ft_printf(" %s %s %s %s %s", " - ", "", "4", "", s2);
+	// printf("\n");
+	// ft_printf(" %s %s %s %s %s ", " - ", "", "4", "", "2 ");
+	// printf("\n");
+	// ft_printf(" NULL %s NULL ", NULL);
+    return 0;
 }
-
-
-
-// */
-
-/*fsoars*/
-// int main(void)
-// {
-// 	// printf("\001\002\007\v\010\f\r\n");
-// 	// ft_printf("\001\002\007\v\010\f\r\n");
-	
-// 	printf(" %%");
-// 	printf("\n");
-// 	ft_printf(" %%");
-// }
+*/
 
 // va_copy:
 // Function: va_copy(dest, src)
@@ -331,8 +167,6 @@ void print_args(int count, ...) {
 	// arguments to release any resources associated with the va_list.
     va_end(args);
 } */
-
-
 
 /*int main() {
 	// The first argument is the number of arguments that follow.

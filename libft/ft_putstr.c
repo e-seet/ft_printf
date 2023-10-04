@@ -10,15 +10,13 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-// may need to print stuff too.. ??
-// for now i just take as normal string
 void	ft_putstr(char *s, int *ptrnum)
 {
 	int	len;
-
+	
+	if (!s)
+		return ft_putstr("(null)", ptrnum);
 	len = ft_strlen(s);
-	// printf("s %s len: %d\n\n",s ,len);
-	//remove the extra null terminator
-	ptrnum = ptrnum + len - 1;
+	*ptrnum = *ptrnum + len ;
 	write(1, s, len);
 }
