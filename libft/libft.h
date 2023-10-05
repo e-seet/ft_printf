@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseet <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/05 18:37:25 by eseet             #+#    #+#             */
+/*   Updated: 2023/10/05 18:37:25 by eseet            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 
 # include <unistd.h>
 # include <stdio.h>
 # include <stdarg.h>
+# include <stdint.h>
 
 // int	ft_putchar(int c);
 // void	ft_puthex(unsigned int n);

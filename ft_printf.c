@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseet <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/05 18:37:15 by eseet             #+#    #+#             */
+/*   Updated: 2023/10/05 18:37:16 by eseet            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // #include <stdio.h>
 #include <stdarg.h>
 // #include "libft/libft.h"
@@ -48,7 +60,7 @@ void	ft_printfhelper(const char *str, int i, int *num, va_list args)
 	{
 		if (str[i] == '%')
 		{
-			if (str[i + 1] == 'c' || str[i + 1] == '%')
+			if (str[i + 1] == 'c')
 				ft_putchar(va_arg(args, int), num);
 			else if (str[i + 1] == 's')
 				ft_putstr(va_arg(args, char *), num);
@@ -62,6 +74,9 @@ void	ft_printfhelper(const char *str, int i, int *num, va_list args)
 				ft_puthex(va_arg(args, unsigned int), num);
 			else if (str[i + 1] == 'X')
 				ft_puthexup(va_arg(args, unsigned int), num);
+			else if (str[i + 1] == '%')
+				// ft_putchar(va_arg(args, int), num);
+				ft_putchar('%', num);
 			i = i + 1;
 		}
 		else
