@@ -3,7 +3,6 @@
 void	ft_putnbr_fd(int n, int *ptrnum)
 {
 	unsigned int	m;
-	size_t			write_ok;
 
 	if (n < 0)
 	{
@@ -20,8 +19,5 @@ void	ft_putnbr_fd(int n, int *ptrnum)
 		if (*ptrnum == -1)
 			return ;
 	}
-	*ptrnum = *ptrnum + 1;
-	write_ok = write(1, &"0123456789"[m % 10], 1);
-	if (write_ok == (size_t) -1)
-		*ptrnum = -1;
+	ft_helper(write(1, &"0123456789"[m % 10], 1), 1, ptrnum);
 }

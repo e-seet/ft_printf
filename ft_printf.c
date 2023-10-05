@@ -21,51 +21,31 @@
 // When calling the function
 // ft_printf("this item costs %d dollars and that is %d", 10, 50);
 // it wil ltake it string and (10, 15) in ...
-void	ft_printfarg(const char *str, int i, int *num, va_list args)
-{
-	if (str[i + 1] == 'c')
-		ft_putchar(va_arg(args, int), num);
-	else if (str[i + 1] == 's')
-		ft_putstr(va_arg(args, char *), num);
-	else if (str[i + 1] == 'p')
-		ft_putptr(va_arg(args, void *), num);
-	else if (str[i + 1] == 'd' || str[i + 1] == 'i')
-		ft_putnbr_fd(va_arg(args, int), num);
-	else if (str[i + 1] == 'u')
-		ft_putunbr(va_arg(args, unsigned int), num);
-	else if (str[i + 1] == 'x')
-		ft_puthex(va_arg(args, unsigned int), num);
-	else if (str[i + 1] == 'X')
-		ft_puthexup(va_arg(args, unsigned int), num);
-	else if (str[i + 1] == '%')
-		ft_putchar('%', num);
-}
 
-void	ft_printfhelper(const char *str, int i, int *num, va_list args)
-{
-	size_t	write_ok;
+// void	ft_printfarg(const char *str, int i, int *num, va_list args)
+// {
+// 	if (str[i + 1] == 'c')
+// 		ft_putchar(va_arg(args, int), num);
+// 	else if (str[i + 1] == 's')
+// 		ft_putstr(va_arg(args, char *), num);
+// 	else if (str[i + 1] == 'p')
+// 		ft_putptr(va_arg(args, void *), num);
+// 	else if (str[i + 1] == 'd' || str[i + 1] == 'i')
+// 		ft_putnbr_fd(va_arg(args, int), num);
+// 	else if (str[i + 1] == 'u')
+// 		ft_putunbr(va_arg(args, unsigned int), num);
+// 	else if (str[i + 1] == 'x')
+// 		ft_puthex(va_arg(args, unsigned int), num);
+// 	else if (str[i + 1] == 'X')
+// 		ft_puthexup(va_arg(args, unsigned int), num);
+// 	else if (str[i + 1] == '%')
+// 		ft_putchar('%', num);
+// }
 
-	write_ok = 0;
-	while (str[i] != '\0' && *num != -1)
-	{
-		if (str[i] == '%')
-		{
-			ft_printfarg(str, i, num, args);
-			i = i + 2;
-		}
-		else
-		{
-			write_ok = write(1, &str[i], 1);
-			if (write_ok != (size_t) 1)
-			{
-				*num = -1;
-				break ;
-			}
-			i++;
-			*num = *num + 1;
-		}
-	}
-}
+// void	ft_printfhelper(const char *str, int i, int *num, va_list args)
+// {
+	
+// }
 
 int	ft_printf(const char *str, ...)
 {
@@ -76,7 +56,39 @@ int	ft_printf(const char *str, ...)
 	va_start(args, str);
 	i = 0;
 	num = 0;
-	ft_printfhelper(str, i, &num, args);
+	// ft_printfhelper(str, i, &num, args);
+	while (str[i] != '\0' && num != -1)
+	{
+		if (str[i] == '%')
+		{
+			if (str[i + 1] == 'c')
+				ft_putchar(va_arg(args, int), &num);
+			else if (str[i + 1] == 's')
+				ft_putstr(va_arg(args, char *), &num);
+			else if (str[i + 1] == 'p')
+				ft_putptr(va_arg(args, void *), &num);
+			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
+				ft_putnbr_fd(va_arg(args, int), &num);
+			else if (str[i + 1] == 'u')
+				ft_putunbr(va_arg(args, unsigned int), &num);
+			else if (str[i + 1] == 'x')
+				ft_puthex(va_arg(args, unsigned int), &num);
+			else if (str[i + 1] == 'X')
+				ft_puthexup(va_arg(args, unsigned int), &num);
+			else if (str[i + 1] == '%')
+				ft_putchar('%', &num);
+			i = i + 2;
+		}
+		else
+		{
+			ft_helper(write(1, &str[i], 1), 1, &num);
+			if (num == -1)
+				break ;
+			i++;
+		}
+	}
+
+	va_end(args);
 	return (num);
 }
 

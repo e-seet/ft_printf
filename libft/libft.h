@@ -20,5 +20,6 @@ void	ft_putnbr_fd(int n, int *ptrnum);
 void	ft_putptr(void *ptr, int *ptrnum);
 void	ft_putunbr(unsigned int n, int *ptrnum);
 void	ft_putstr(char *s, int *ptrnum);
+void	ft_helper(size_t write_ok, size_t size, int *num);
 
 #endif

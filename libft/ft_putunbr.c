@@ -2,8 +2,6 @@
 
 void	ft_putunbr(unsigned int n, int *ptrnum)
 {
-	size_t	write_ok;
-
 	if (n < 0)
 	{
 		ft_putchar('-', ptrnum);
@@ -17,10 +15,7 @@ void	ft_putunbr(unsigned int n, int *ptrnum)
 		if (*ptrnum == -1)
 			return ;
 	}
-	*ptrnum = *ptrnum + 1;
-	write_ok = write(1, &"0123456789"[n % 10], 1);
-	if (write_ok != (size_t) 1)
-		*ptrnum = -1;
+	ft_helper(write(1, &"0123456789"[n % 10], 1), 1, ptrnum);
 }
 
 // if (n < 0)
