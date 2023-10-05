@@ -42,10 +42,33 @@
 // 		ft_putchar('%', num);
 // }
 
-// void	ft_printfhelper(const char *str, int i, int *num, va_list args)
-// {
-	
-// }
+void	ft_printfhelper(const char *str, int i, int *num, va_list args)
+{
+	while (str[i] != '\0' && *num != -1)
+	{
+		if (str[i] == '%')
+		{
+			if (str[i + 1] == 'c' || str[i + 1] == '%')
+				ft_putchar(va_arg(args, int), num);
+			else if (str[i + 1] == 's')
+				ft_putstr(va_arg(args, char *), num);
+			else if (str[i + 1] == 'p')
+				ft_putptr(va_arg(args, void *), num);
+			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
+				ft_putnbr_fd(va_arg(args, int), num);
+			else if (str[i + 1] == 'u')
+				ft_putunbr(va_arg(args, unsigned int), num);
+			else if (str[i + 1] == 'x')
+				ft_puthex(va_arg(args, unsigned int), num);
+			else if (str[i + 1] == 'X')
+				ft_puthexup(va_arg(args, unsigned int), num);
+			i = i + 1;
+		}
+		else
+			ft_helper(write(1, &str[i], 1), 1, num);
+		i++;
+	}
+}
 
 int	ft_printf(const char *str, ...)
 {
@@ -56,38 +79,7 @@ int	ft_printf(const char *str, ...)
 	va_start(args, str);
 	i = 0;
 	num = 0;
-	// ft_printfhelper(str, i, &num, args);
-	while (str[i] != '\0' && num != -1)
-	{
-		if (str[i] == '%')
-		{
-			if (str[i + 1] == 'c')
-				ft_putchar(va_arg(args, int), &num);
-			else if (str[i + 1] == 's')
-				ft_putstr(va_arg(args, char *), &num);
-			else if (str[i + 1] == 'p')
-				ft_putptr(va_arg(args, void *), &num);
-			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
-				ft_putnbr_fd(va_arg(args, int), &num);
-			else if (str[i + 1] == 'u')
-				ft_putunbr(va_arg(args, unsigned int), &num);
-			else if (str[i + 1] == 'x')
-				ft_puthex(va_arg(args, unsigned int), &num);
-			else if (str[i + 1] == 'X')
-				ft_puthexup(va_arg(args, unsigned int), &num);
-			else if (str[i + 1] == '%')
-				ft_putchar('%', &num);
-			i = i + 2;
-		}
-		else
-		{
-			ft_helper(write(1, &str[i], 1), 1, &num);
-			if (num == -1)
-				break ;
-			i++;
-		}
-	}
-
+	ft_printfhelper(str, i, &num, args);
 	va_end(args);
 	return (num);
 }
