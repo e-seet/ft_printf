@@ -32,18 +32,11 @@ uint32_t byte4 = value & 0xff;
 */
 #include "libft.h"
 
-// print address of the pointer
-void	ft_putptr(void *s, int *ptrnum)
+int	ft_putptrhelper(char *buf, uintptr_t x)
 {
-	char		buf[2 + sizeof((uintptr_t)s) * 2];
 	size_t		i;
 	size_t		startindex;
-	size_t		length;
-	uintptr_t	x;
 
-	x = (uintptr_t) s;
-	if (x == 0)
-		ft_helper(write(1, "0x0", 3), 3, ptrnum);
 	i = 0;
 	startindex = 2;
 	buf[0] = '0';
@@ -56,6 +49,25 @@ void	ft_putptr(void *s, int *ptrnum)
 	}
 	while (buf[startindex] == '0')
 		startindex++;
+	return (startindex);
+}
+
+// print address of the pointer
+// need to check s pointer
+void	ft_putptr(void *s, int *ptrnum)
+{
+	char		buf[2 + sizeof((uintptr_t)s) * 2];
+	size_t		startindex;
+	size_t		length;
+	uintptr_t	x;
+
+	x = (uintptr_t) s;
+	if (x == 0)
+	{
+		ft_helper(write(1, "0x0", 3), 3, ptrnum);
+		return ;
+	}
+	startindex = ft_putptrhelper(buf, x);
 	length = 2 + sizeof(x) * 2 - startindex;
 	ft_helper(write(1, buf, 2), 2, ptrnum);
 	if (*ptrnum != -1)

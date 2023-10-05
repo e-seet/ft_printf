@@ -50,38 +50,46 @@
 // 		ft_puthex(va_arg(args, unsigned int), num);
 // 	else if (str[i + 1] == 'X')
 // 		ft_puthexup(va_arg(args, unsigned int), num);
+// 	// else if (str[i + 1] == 'x' || str[i + 1] == 'X')
+// 	// 	ft_printfarg2(str, i, num, args);
 // 	else if (str[i + 1] == '%')
 // 		ft_putchar('%', num);
+// }
+
+// void	ft_printfarg2(const char *str, int i, int *num, va_list args)
+// {
+// 	if (str[i + 1] == 'x')
+// 		ft_puthex(va_arg(args, unsigned int), num);
+// 	else if (str[i + 1] == 'X')
+// 		ft_puthexup(va_arg(args, unsigned int), num);
 // }
 
 void	ft_printfhelper(const char *str, int i, int *num, va_list args)
 {
 	while (str[i] != '\0' && *num != -1)
 	{
-		if (str[i] == '%')
-		{
-			if (str[i + 1] == 'c')
-				ft_putchar(va_arg(args, int), num);
-			else if (str[i + 1] == 's')
-				ft_putstr(va_arg(args, char *), num);
-			else if (str[i + 1] == 'p')
-				ft_putptr(va_arg(args, void *), num);
-			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
-				ft_putnbr_fd(va_arg(args, int), num);
-			else if (str[i + 1] == 'u')
-				ft_putunbr(va_arg(args, unsigned int), num);
-			else if (str[i + 1] == 'x')
-				ft_puthex(va_arg(args, unsigned int), num);
-			else if (str[i + 1] == 'X')
-				ft_puthexup(va_arg(args, unsigned int), num);
-			else if (str[i + 1] == '%')
-				// ft_putchar(va_arg(args, int), num);
-				ft_putchar('%', num);
-			i = i + 1;
-		}
+		if (str[i] == '%' && str[i + 1] == 'c')
+			ft_putchar(va_arg(args, int), num);
+		else if (str[i] == '%' && str[i + 1] == 's')
+			ft_putstr(va_arg(args, char *), num);
+		else if (str[i] == '%' && str[i + 1] == 'p')
+			ft_putptr(va_arg(args, void *), num);
+		else if (str[i] == '%' && (str[i + 1] == 'd' || str[i + 1] == 'i'))
+			ft_putnbr_fd(va_arg(args, int), num);
+		else if (str[i] == '%' && str[i + 1] == 'u')
+			ft_putunbr(va_arg(args, unsigned int), num);
+		else if (str[i] == '%' && str[i + 1] == 'x')
+			ft_puthex(va_arg(args, unsigned int), num);
+		else if (str[i] == '%' && str[i + 1] == 'X')
+			ft_puthexup(va_arg(args, unsigned int), num);
+		else if (str[i] == '%' && str[i + 1] == '%')
+			ft_putchar('%', num);
 		else
+		{
 			ft_helper(write(1, &str[i], 1), 1, num);
-		i++;
+			i--;
+		}
+		i = i + 2;
 	}
 }
 
