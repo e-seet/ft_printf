@@ -54,6 +54,8 @@ int	ft_putptrhelper(char *buf, uintptr_t x)
 
 // print address of the pointer
 // need to check s pointer
+
+// ft_helper(write(1, "0x0", 3), 3, ptrnum);
 void	ft_putptr(void *s, int *ptrnum)
 {
 	char		buf[2 + sizeof((uintptr_t)s) * 2];
@@ -64,7 +66,7 @@ void	ft_putptr(void *s, int *ptrnum)
 	x = (uintptr_t) s;
 	if (x == 0)
 	{
-		ft_helper(write(1, "0x0", 3), 3, ptrnum);
+		ft_helper(write(1, "(nil)", 5), 5, ptrnum);
 		return ;
 	}
 	startindex = ft_putptrhelper(buf, x);
