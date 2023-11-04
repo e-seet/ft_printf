@@ -3,8 +3,8 @@ NAME			=	libft.a
 PRINT_NAME		=	LIBFT
 
 #				Files
-SRCS		=	ft_puthex.c			ft_puthexup.c		ft_putnbr_fd.c		ft_helper.c\
-				ft_putptr.c			ft_putunbr.c		ft_putstr.c			ft_putchar.c\
+SRCS		=	ft_puthex2.c			ft_puthexup2.c		ft_putnbr_fd2.c		ft_helper2.c\
+				ft_putptr2.c			ft_putunbr2.c		ft_putstr2.c			ft_putchar2.c\
 	
 OBJS		=	${SRCS:.c=.o}
 
